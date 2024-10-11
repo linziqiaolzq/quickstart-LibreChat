@@ -219,6 +219,11 @@ Resources:
             EOF
 
             # 在Docker Compose启动前执行此命令片段，命令中可以引用参数
+            
+            echo "121.43.177.8 docker.io" >>/etc/hosts
+            echo "121.43.177.8 registry-1.docker.io" >>/etc/hosts
+            echo "121.43.177.8 auth.docker.io" >>/etc/hosts
+            echo "121.43.177.8 production.cloudflare.docker.com" >>/etc/hosts
             echo "before docker compose starts"
             echo ${AdminPassword}
             # 使用sed命令将docker-compose.yaml中的password替换为${AdminPassword}
