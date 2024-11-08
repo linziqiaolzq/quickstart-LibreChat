@@ -61,3 +61,56 @@ LibreChat社区版在计算巢部署的费用主要涉及：
 
 4. 注册账号，即可使用LibreChat。
     ![image.png](7.jpg)
+## 其他问题
+### 一、如何进入ECS
+点击服务实例详情，进入ECS：
+![image.png](8.jpg)
+![image.png](9.jpg)
+
+### 二、如何添加转发地址
+
+1. 进入ECS，参考问题一。
+
+2. 输入命令
+```json
+sudo su
+cd /home/admin/application/docker_compose
+sudo vim .env
+```
+   将会进入如下页面
+ ![image.png](10.jpg)
+3. 寻找需要修改的AI模型，本处以OpenAI为例，按下i键，左下角将会出现'--INSERT--'标志，通过方向键移动光标，在第一个红框处（OPEN_REVERSE_PROXY）输入转发地址。
+ 
+![image.png](11.jpg)
+4. 输入完成后按 ESC 键，左下角'--INSERT--'消失，输入:wq（冒号别漏了），保存退出。
+
+### 三、如何添加第三方API模型
+
+1. 进入ECS，参考问题一。
+2. 修改librechat.yaml文件：输入命令（librechat.yaml文件可参考[链接](https://www.librechat.ai/docs/configuration/librechat_yaml/example)）。
+```json
+sudo su
+cd /home/admin/application/docker_compose
+sudo vim librechat.yaml
+```
+
+   进入librechat.yaml文件，此文件中默认已有groq、Mistral、OpenRouster三个模型，如需添加，可按照其格式新增，如下新增了通义千问（Qwen）.修改完成后按 ESC 键，然后输入 :wq 退出。
+![image.png](12.jpg)
+3. 修改docker-compose文件：输入命令：
+```json
+sudo cp docker-compose.yml docker-compose.override.yml
+```
+此时将会新增文件：
+![image.png](15.png)
+进入文件：sudo vim docker-compose.override.yml，输入i进入修改模式，按照如下修改，修改完成后按 ESC 键，然后输入 :wq 退出。
+修改前
+![image.png](13.jpg)
+修改后
+![image.png](14.jpg)
+4. 重启Docker：输入命令。
+```json
+sudo docker compose up
+```
+5. 效果展示：进入LibreChat页面，第三方API模型已显示。
+
+![image.png](16.jpg)
